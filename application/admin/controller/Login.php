@@ -10,10 +10,23 @@ namespace app\admin\controller;
 use think\Controller;
 use app\common\lib\IAuth;
 
-class Login extends Controller
+class Login extends Base
 {
+    /**
+     * 覆盖初始化方法，防止死循环
+     */
+    public function _initialize()
+    {
+    }
+
     public function index() {
-        return $this->fetch();
+        $isLogin = $this->isLogin();
+        if($isLogin) {
+            return $this->redirect('index/index');
+        }else {
+            return $this->fetch();
+
+        }
     }
 
     public function check() {
@@ -23,17 +36,34 @@ class Login extends Controller
                 $this->error('验证码不正确');
             }
             //validate username password from post
-            //username
-            $user = model('AdminUser')->get(['username' => $data['username']]);
-            if(!$user || $user->status != 1) {
-                $this->error('用户不存在');
+            try {
+                //username
+                $user = model('AdminUser')->get(['username' => $data['username']]);
+            }catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
-            //password
-            if(IAuth::setPassword($data['password']) != $user['password']) {
-                $this->error('密码不正确');
+                if(!$user || $user->status != config('code.status_normal')) {
+                    $this->error('用户不存在');
+                }
+                //password
+                if(IAuth::setPassword($data['password']) != $user['password']) {
+                    $this->error('密码不正确');
+                }
+                //update database
+                $udata = [
+                    'last_login_time' => time(),
+                    'last_login_ip' => request()->ip(),
+                ];
+            try{
+                model('AdminUser')->save($udata, ['id' => $user->id]);
+            }catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
 
-            halt($user);
+            //session
+            session(config('admin.session_user'), $user, config('session_user_scope'));
+            $this->success('登陆成功', 'index/index');
+//            halt($user);
 
         }else {
             $this->error('请求不合法');
@@ -42,6 +72,14 @@ class Login extends Controller
 
     public function welcome() {
         return "dsd";
+    }
+
+    /**
+     * 清空session, 跳转页面
+     */
+    public function logout() {
+       session(null, config('session_user_scope'));
+       $this->redirect('login/index');
     }
 }
 
