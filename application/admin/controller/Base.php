@@ -11,6 +11,14 @@ use think\Controller;
 
 class Base extends Controller
 {
+    public $page = '';
+
+    public $size = '';
+    /**
+     * 查询条件的起始值
+     * @var int
+     */
+    public $from = 0;
     /**
      * 初始化方法
      */
@@ -28,5 +36,15 @@ class Base extends Controller
         }
 
         return false;
+    }
+
+    /**
+     * 获取分页内容
+     * @param $data
+     */
+    public function getPageAndSize($data) {
+        $this->page = !empty($data['page']) ? $data['page'] : 1;
+        $this->size = !empty($data['size']) ? $data['size'] : config('paginate.list_rows');
+        $this->from = ($this->page - 1) * $this->size;
     }
 }
