@@ -8,14 +8,12 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+use think\Route;
 
-return [
-    '__pattern__' => [
-        'name' => '\w+',
-    ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],
+//get
+Route::get('test', 'api/test/index');
+Route::put('test/:id', 'api/test/update');
+Route::delete('test/:id', 'api/test/delete');
 
-];
+Route::resource('test', 'api/test');
+//post => api/test save
