@@ -8,6 +8,7 @@
 namespace app\api\controller;
 
 use think\Controller;
+use app\common\lib\exception\ApiException;
 
 class Test extends Controller {
     public function index() {
@@ -23,6 +24,10 @@ class Test extends Controller {
     }
 
     public function save() {
-        return input('post.');
+        $data = input('post.');
+        if($data['mt'] != 1) {
+            throw new ApiException('数据不合法', 404);
+        }
+        return show(1, 'OK', input('post.'), 201);
     }
 }
