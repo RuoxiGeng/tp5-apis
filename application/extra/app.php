@@ -7,4 +7,9 @@
  */
 return [
     'password_pre_halt' => '_#sing_ty',
+    'aeskey' => '12f862d21dcfeafb57bckfrrt5yuiopf', //aes密钥, 服务端和客户端必须保持一致
+    'apptypes' => [
+        'ios',
+        'android',
+    ],
 ];
