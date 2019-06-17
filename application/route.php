@@ -17,3 +17,5 @@ Route::delete('test/:id', 'api/test/delete');
 
 Route::resource('test', 'api/test');
 //post => api/test save
+
+Route::get('api/cat', 'api/cat/read');

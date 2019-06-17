@@ -6,6 +6,7 @@
  * Time: 22:52
  */
 namespace app\common\lib;
+use think\Cache;
 use app\common\lib\Aes;
 
 class IAuth {
@@ -54,16 +55,17 @@ class IAuth {
         ) {
             return false;
         }
-//        if(!config('app_debug')) {
-//            if ((time() - ceil($arr['time'] / 1000)) > config('app.app_sign_time')) {
-//                return false;
-//            }
-//            //echo Cache::get($data['sign']);exit;
-//            // 唯一性判定
-//            if (Cache::get($data['sign'])) {
-//                return false;
-//            }
-//        }
+
+        if(!config('app_debug')) {
+        //判定sign是否超时
+            if ((time() - ceil($arr['time'] / 1000)) > config('app.app_sign_time')) {
+                return false;
+            }
+        // 唯一性判定
+            if (Cache::get($data['sign'])) {
+                    return false;
+            }
+        }
         return true;
     }
 }

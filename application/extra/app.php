@@ -12,4 +12,6 @@ return [
         'ios',
         'android',
     ],
+    'app_sign_time' => 10, //sign失效时间
+    'app_sign_cache_time' => 20, //sign缓存失效时间
 ];

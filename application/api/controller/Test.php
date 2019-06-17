@@ -23,9 +23,15 @@ class Test extends Common {
 //        return $id;
     }
 
+    /**
+     * post 新增
+     * @return mixed
+     */
     public function save() {
         $data = input('post.');
 
+        // 获取到提交数据 插入库，
+        // 给客户端APP  =》 接口数据
         return show(1, 'OK', input('post.'), 201);
     }
 }

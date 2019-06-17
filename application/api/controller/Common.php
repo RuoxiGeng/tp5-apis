@@ -8,10 +8,11 @@
 namespace app\api\controller;
 
 use app\common\lib\exception\ApiException;
-use Qiniu\Auth;
+use think\Cache;
 use think\Controller;
 use app\common\lib\Aes;
 use app\common\lib\IAuth;
+use app\common\lib\Time;
 
 /**
  * API模块公共控制器
@@ -51,6 +52,8 @@ class Common extends Controller {
             throw new ApiException('授权码sign失败', 401);
         }
 
+        Cache::set($headers['sign'], 1, config('app.app_sign_cache_time'));
+        //验证sign唯一性：1:文件 2:mysql 3:redis
         $this->headers = $headers;
     }
 
@@ -58,9 +61,10 @@ class Common extends Controller {
         $data = [
             'did' => '12345dg',
             'version' => 1,
+            'time' => Time::get13TimeStamp(),
         ];
-        $str = 'xgpEeEGepBgyQKSfx6lZAVy9sopCRCzpQzyf4wHp2qQ=';
-//        echo IAuth::setSign($data); exit;
+//        $str = 'xgpEeEGepBgyQKSfx6lZAVy9sopCRCzpQzyf4wHp2qQ=';
+        echo IAuth::setSign($data); exit;
         echo (new Aes())->decrypt($str); exit;
     }
 }
