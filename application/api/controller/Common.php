@@ -26,6 +26,10 @@ class Common extends Controller {
      * @var string
      */
     public $headers = '';
+
+    public $page = 1;
+    public $size = 10;
+    public $from = 0;
     /**
      * 初始化的方法
      */
@@ -66,5 +70,34 @@ class Common extends Controller {
 //        $str = 'xgpEeEGepBgyQKSfx6lZAVy9sopCRCzpQzyf4wHp2qQ=';
         echo IAuth::setSign($data); exit;
         echo (new Aes())->decrypt($str); exit;
+    }
+
+    /**
+     * 获取处理的新闻内容数据
+     * @param array $news
+     * @return array
+     */
+    protected function getDealNews($news = []) {
+        if(empty($news)) {
+            return [];
+        }
+
+        $cats = config('cat.lists');
+
+        foreach ($news as $key => $new) {
+            $news[$key]['catname'] = $cats[$new['catid']] ? $cats[$new['catid']] : '-';
+        }
+
+        return $news;
+    }
+
+    /**
+     * 获取分页内容
+     * @param $data
+     */
+    public function getPageAndSize($data) {
+        $this->page = !empty($data['page']) ? $data['page'] : 1;
+        $this->size = !empty($data['size']) ? $data['size'] : config('paginate.list_rows');
+        $this->from = ($this->page - 1) * $this->size;
     }
 }

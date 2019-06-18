@@ -5,9 +5,10 @@
  * Date: 2019-06-12
  * Time: 23:10
  */
-namespace app\api\controller;
+namespace app\api\controller\v1;
 
 use think\Controller;
+use app\api\controller\Common;
 use app\common\lib\exception\ApiException;
 
 class Cat extends Common {

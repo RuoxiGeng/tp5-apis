@@ -18,4 +18,9 @@ Route::delete('test/:id', 'api/test/delete');
 Route::resource('test', 'api/test');
 //post => api/test save
 
-Route::get('api/cat', 'api/cat/read');
+Route::get('api/:ver/cat', 'api/:ver.cat/read');
+Route::get('api/:ver/index', 'api/:ver.index/index');
+
+//news
+Route::resource('api/:ver/news', 'api/:ver.news');
+
