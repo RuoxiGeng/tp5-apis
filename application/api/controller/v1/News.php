@@ -8,6 +8,7 @@
 namespace app\api\controller\v1;
 
 use app\api\controller\Common;
+use app\common\lib\exception\ApiException;
 
 class News extends Common {
     public function index() {
@@ -34,5 +35,28 @@ class News extends Common {
         ];
 
         return show(config('code.success'), 'OK', $result, 200);
+    }
+
+    public function read() {
+        $id = input('param.id', 0, 'intval');
+        if(empty($id)) {
+            return new ApiException('id is not ', 404);
+        }
+
+        //通过id去获取数据表里面的数据
+        $news = model('News')->get($id);
+        if(empty($news) || $news->status != config('code.status_normal')) {
+            return new ApiException('不存在该新闻', 404);
+        }
+
+        try {
+            model('News')->where(['id' => $id])->setInc('read_count');
+        }catch (\Exception $e) {
+            return new ApiException('error', 400);
+        }
+
+        $cats = config('cat.lists');
+        $news->catname = $cats[$news->catid];
+        return show(config('code.success'), 'OK', $news, 200);
     }
 }
