@@ -20,6 +20,7 @@ Route::resource('test', 'api/test');
 
 Route::get('api/:ver/cat', 'api/:ver.cat/read');
 Route::get('api/:ver/index', 'api/:ver.index/index');
+Route::get('api/:ver/init', 'api/:ver.index/init');
 
 //news
 Route::resource('api/:ver/news', 'api/:ver.news');
