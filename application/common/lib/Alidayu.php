@@ -71,7 +71,7 @@ class Alidayu {
             return false;
         }
 
-        if($resp->result->success === true) {
+        if($resp->result->success == "true") {
             //设置失效时间
             Cache::set($phone, $code, config('aliyun.identify_time'));
             return true;

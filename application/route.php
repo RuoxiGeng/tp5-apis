@@ -26,4 +26,11 @@ Route::get('api/:ver/init', 'api/:ver.index/init');
 Route::resource('api/:ver/news', 'api/:ver.news');
 //rank
 Route::get('api/:ver/rank', 'api/:ver.rank/index');
+//短信验证码相关
+Route::resource('api/:ver/identify', 'api/:ver.identify');
+//app登陆的路由
+Route::post('api/:ver/login', 'api/:ver.login/save');
+
+Route::resource('api/:ver/user', 'api/:ver.user');
+
 

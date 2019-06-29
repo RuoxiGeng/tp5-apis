@@ -7,6 +7,7 @@
  */
 namespace app\api\controller;
 
+use app\common\lib\IAuth;
 use think\Controller;
 use app\common\lib\exception\ApiException;
 use ali\top\TopClient;
@@ -58,5 +59,12 @@ class Test extends Common {
 
     public function testsend() {
         Alidayu::getInstance()->sendSmsIdentify('18618158941');
+    }
+
+    ///  APP登录和web登陆的区别
+    // web phpsessionid  , app -> token(唯一性) ，在登录状态下 所有的请求必须带token, token-》失效时间
+
+    public function token() {
+        echo IAuth::setAppLoginToken();
     }
 }

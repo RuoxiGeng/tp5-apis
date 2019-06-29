@@ -68,4 +68,15 @@ class IAuth {
         }
         return true;
     }
+
+    /**
+     * 设置登录token 唯一性
+     * @param string $phone
+     * @return string
+     */
+    public static function setAppLoginToken($phone = '') {
+        $str = md5(uniqid(md5(microtime(true)), true));
+        $str = sha1($str.$phone);
+        return $str;
+    }
 }
