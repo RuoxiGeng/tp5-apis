@@ -14,6 +14,10 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-mongo" />
       <path value="$PROJECT_DIR$/vendor/qiniu/php-sdk" />
+      <path value="$PROJECT_DIR$/vendor/php-sdk-7.2.7/src" />
+      <path value="$PROJECT_DIR$/vendor/php-sdk-7.2.7/docs" />
+      <path value="$PROJECT_DIR$/vendor/php-sdk-7.2.7/tests" />
+      <path value="$PROJECT_DIR$/vendor/php-sdk-7.2.7/examples" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />

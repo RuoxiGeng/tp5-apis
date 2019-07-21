@@ -32,5 +32,15 @@ Route::resource('api/:ver/identify', 'api/:ver.identify');
 Route::post('api/:ver/login', 'api/:ver.login/save');
 
 Route::resource('api/:ver/user', 'api/:ver.user');
-
+//图片上传
+Route::post('api/:ver/image', 'api/:ver.image/save');
+//点赞
+Route::post('api/:ver/upvote', 'api/:ver.upvote/save');
+//取消点赞
+Route::delete('api/:ver/upvote', 'api/:ver.upvote/delete');
+//获取文章是否被用户点赞
+Route::get('api/:ver/upvote:id', 'api/:ver.upvote/read');
+//评论
+Route::post('api/:ver/comment', 'api/:ver.comment/save');
+Route::post('api/:ver/comment:id', 'api/:ver.comment/read');
 
